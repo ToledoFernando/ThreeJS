@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        overflow: hidden;
+      }
+      * {
+        transition: all 0.3s;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="./threeJS/three.js"></script>
+    <script>
+      //esena para threeJS
+      const scene = new THREE.Scene();
+      //camara para ver la esena
+      const camara = new THREE.PerspectiveCamera(
+        75, //tamaño de camara
+        window.innerWidth / window.innerHeight, //tamaño de camara
+        0.1, //tamaño de renderizado de cerca
+        1000 //tamaño de renderizado de lejos
+      );
+
+      //crear obj para renderizar
+      const render = new THREE.WebGLRenderer();
+      //tamaño del render
+      render.setSize(window.innerWidth, window.innerHeight);
+      render.domElement.id = "canvarXD";
+
+      //agregamos un hijo al body
+      document.body.appendChild(render.domElement);
+
+      //creamos la geometrya del obj
+      const geometry = new THREE.BoxGeometry();
+      //creamos el material del obj
+      const material = new THREE.MeshBasicMaterial({ color: "red" });
+
+      //creamos el obj pasandole los parametros de geomtry y material
+      const cube = new THREE.Mesh(geometry, material);
+
+      //agregamos el cubo a la escena
+      scene.add(cube);
+
+      //desplazamos la camara para ver el cubo
+
+      camara.position.z = 5;
+
+      //creamos funcion para renderizar en cada cambio de fotograma
+      function animated() {
+        requestAnimationFrame(animated);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        render.render(scene, camara);
+      }
+
+      animated();
+    </script>
+  </body>
+</html>
