@@ -21,6 +21,8 @@
     <script>
       //esena para threeJS
       const scene = new THREE.Scene();
+      // scene.background = new THREE.Color("#666666");
+
       //camara para ver la esena
       const camara = new THREE.PerspectiveCamera(
         75, //tamaño de camara
@@ -30,10 +32,10 @@
       );
 
       //crear obj para renderizar
-      const render = new THREE.WebGLRenderer();
+      const render = new THREE.WebGLRenderer({ alpha: true });
+
       //tamaño del render
       render.setSize(window.innerWidth, window.innerHeight);
-      render.domElement.id = "canvarXD";
 
       //agregamos un hijo al body
       document.body.appendChild(render.domElement);
@@ -41,7 +43,7 @@
       //creamos la geometrya del obj
       const geometry = new THREE.BoxGeometry();
       //creamos el material del obj
-      const material = new THREE.MeshBasicMaterial({ color: "red" });
+      const material = new THREE.MeshBasicMaterial({ color: "green" });
 
       //creamos el obj pasandole los parametros de geomtry y material
       const cube = new THREE.Mesh(geometry, material);
@@ -49,9 +51,26 @@
       //agregamos el cubo a la escena
       scene.add(cube);
 
+      const grid = new THREE.GridHelper(100, 100);
+      scene.add(grid);
       //desplazamos la camara para ver el cubo
 
-      camara.position.z = 5;
+      camara.position.z = 6;
+      camara.position.y = 2;
+
+      const move = (e) => {
+        camara.position.y += e.movementY * 0.001;
+        camara.position.x += -e.movementX * 0.001;
+        // console.log(e.movementX * 0.001);
+      };
+
+      window.addEventListener("mousedown", (e) => {
+        window.addEventListener("mousemove", move);
+      });
+
+      window.addEventListener("mouseup", (e) => {
+        window.removeEventListener("mousemove", move);
+      });
 
       //creamos funcion para renderizar en cada cambio de fotograma
       function animated() {
