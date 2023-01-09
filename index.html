@@ -17,6 +17,7 @@
     </style>
   </head>
   <body>
+    <input type="color" id="color" name="color">
     <script src="./threeJS/three.js"></script>
     <script>
       //esena para threeJS
@@ -42,14 +43,16 @@
 
       //creamos la geometrya del obj
       const geometry = new THREE.BoxGeometry(1, 2, 2);
+
       //creamos el material del obj
-      const material = new THREE.MeshStandardMaterial({ color: "green" });
+      const material = new THREE.MeshStandardMaterial({ color: colorCubo });
 
       //creamos el obj pasandole los parametros de geomtry y material
       const cube = new THREE.Mesh(geometry, material);
       // cube.position.z = 1.5;
       cube.position.set(0, 0, 1.5);
       cube.castShadow = true;
+
 
       //Crear luz
       const luz = new THREE.DirectionalLight("#fff", 1, 10);
